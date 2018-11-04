@@ -48,36 +48,15 @@
 
 ![default](https://user-images.githubusercontent.com/24869943/47962647-1d22bc80-e063-11e8-8c0c-5509783b4f07.jpg)
 
-> HTML   
-```
-<!-- 검색 -->
-<div style="position: relative;">
-			
-<!-- 검색 input,btn -->
-   <form action="headselect.do" method="post">
-      <input type="text" autocomplete="off" value="" name="title" placeholder="원하시는 상품을 검색해보세요" class="head_select" 		onkeyup="headtitle_btn()">
-      <input type="submit" class="head_select_btn">
-   </form>
-			
-<!-- 검색된상품리스트 -->
-   <div class="head_ajaxbox">
-      <ul class="ajaxboxul"></ul>
-   </div>
-			
-</div>
-```
 
+1. 검색바(input)에 onkeyup 속성을 주어서 검색어 를 입력할때마다 javascript 함수 실행
+2. 실행된 함수 안에 Ajax 를 통한 데이터 통신
+3. MVC2 구조(Controller - Service - dao)를 이용한 데이터 전달 
+4. Mybatis 쿼리를 이용한 데이터 검색 후 값 리턴
+5. ajax 통신이 success 일경우 display:none 처리 되있던 검색결과 박스 show 처리
+6. 검색어와 맞는 데이터가 있다면 리스트로 리턴받은 값을 jQuery 안에서 each 문이용하여 li 태그안에 append
+7. 검색어와 맞는 데이터가 없다면 검색결과가 없다는 텍스트의 태그를 append
 
-검색바(input)에 
-onkeyup 속성을 주어서 
-검색어 를 입력할때마다
-Ajax 로 데이터베이스에
-데이터에 검색을 한 후
-검색어와 맞는 데이터가 없다면
-검색결과가 없다는 텍스트의 태그를 append 시켰고,
-맞는 데이터가 있다면 리스트로
-받아온 데이터들을 jQuery 안에서 each 문을 돌려
-각각의 데이터들을 append 시키는 방식으로 구현했습니다. 
 
 
 > Ajax를 통한 스크롤 더보기 기능입니다.
