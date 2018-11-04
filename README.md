@@ -35,7 +35,8 @@
 ### 프로젝트 소개
 > main view
 
-![view](https://user-images.githubusercontent.com/24869943/47962950-9d4b2100-e067-11e8-99e6-498b56d7f432.png)
+![view](https://user-images.githubusercontent.com/24869943/47962959-dbe0db80-e067-11e8-9bc4-a4b3b9e5d98f.png)
+
 
 ## 구현기능소개
 
