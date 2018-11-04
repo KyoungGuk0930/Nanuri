@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="membersqls">
+
+	<select id="login"
+		parameterType="com.kh.finalPJ.member.memberDto"
+		resultType="com.kh.finalPJ.member.memberDto">
+		SELECT * FROM MEMBER
+		WHERE ID=#{id} AND PWD=#{pwd}
+	</select>
+
+	<select id="idCheck" parameterType="String" resultType="Integer">
+		SELECT
+		COUNT(*) FROM MEMBER WHERE ID = #{id}
+	</select>
+
+	<select id="emailCheck" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+
+	<select id="nickCheck" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME =
+		#{nickname}
+	</select>
+
+	<insert id="addMember"
+		parameterType="com.kh.finalPJ.member.memberDto">
+		INSERT INTO MEMBER VALUES(#{id}, #{pwd}, #{nickname},
+		#{email}, #{phone}, #{address}, #{name}, 0)
+	</insert>
+
+	<update id="userUpdateAf"
+		parameterType="com.kh.finalPJ.member.memberDto">
+		UPDATE MEMBER SET PWD=#{pwd}, NICKNAME=#{nickname},
+		EMAIL=#{email}, PHONE=#{phone}, ADDRESS=#{address}, NAME=#{name},
+		AUTH=0 WHERE ID=#{id}
+	</update>
+
+	<update id="delUpdateAf"
+		parameterType="com.kh.finalPJ.member.secessionDto">
+		UPDATE MEMBER SET AUTH=1 WHERE ID=#{del_id}
+	</update>
+
+	<insert id="secessionAf"
+		parameterType="com.kh.finalPJ.member.secessionDto">
+		INSERT INTO SECESSION
+		VALUES(SEQ_SECESSION.NEXTVAL,
+		#{del_id}, #{del_reason}, SYSDATE,
+		SYSDATE+7,0)
+	</insert>
+
+	<select id="getBasketList" parameterType="string"
+		resultType="com.kh.finalPJ.member.basketListDto">
+		SELECT SEQ, ID, G_IMG, G_NAME, GOODS.G_CODE, AMOUNT, MONTH,
+		SUM_PRICE FROM BASKET, GOODS WHERE BASKET.G_CODE = GOODS.G_CODE AND
+		ID=#{id}
+	</select>
+
+	<delete id="checkDelAf" parameterType="Integer">
+		DELETE FROM BASKET WHERE
+		SEQ=#{seq}
+	</delete>
+
+	<select id="totalPrice" parameterType="Integer"
+		resultType="Integer">
+		SELECT SUM_PRICE FROM BASKET WHERE SEQ=#{seq}
+	</select>
+
+	<select id="getGoodsSeq" parameterType="String"
+		resultType="Integer">
+		SELECT SEQ FROM R_BBS WHERE G_CODE=#{g_code}
+	</select>
+
+	<select id="getR_StatusList" parameterType="string"
+		resultType="com.kh.finalPJ.member.RStatusDto">
+		SELECT SEQ, GOODS.G_CODE, G_IMG, G_NAME, ID, AMOUNT,
+		S_DATE, E_DATE, TOTAL_PRICE, ORDER_NUM FROM R_STATUS, GOODS WHERE
+		R_STATUS.G_CODE = GOODS.G_CODE AND ID=#{id}
+	</select>
+
+	<delete id="rentalListDel" parameterType="Integer">
+		DELETE FROM R_STATUS
+		WHERE SEQ=#{seq}
+	</delete>
+
+	<select id="getOrderCount" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM R_STATUS WHERE ID=#{id}
+	</select>
+
+	<select id="getWishListCount" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM BASKET WHERE ID=#{id}
+	</select>
+
+	<select id="getAdminQaList" resultType="com.kh.finalPJ.qa.qaDto">
+		SELECT * FROM QA WHERE
+		ID='admin' AND DEL=0 AND REF = -1
+		ORDER BY WDATE DESC
+	</select>
+
+	<select id="getMyReviewList" parameterType="String"
+		resultType="com.kh.finalPJ.review.reviewDto">
+		SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, REVIEW.G_CODE,
+		RATING, GOODS.G_IMG FROM REVIEW, GOODS WHERE REVIEW.G_CODE =
+		GOODS.G_CODE AND ID=#{id} ORDER BY WDATE DESC
+	</select>
+	
+</mapper>

@@ -1,0 +1,9 @@
+diff a/NANURI/WebContent/WEB-INF/views/member/basketList.jsp b/NANURI/WebContent/WEB-INF/views/member/basketList.jsp	(rejected hunks)
+@@ -2,6 +2,7 @@
+ 	pageEncoding="UTF-8"%>
+ <%@page import="java.util.List"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
++<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+ <!DOCTYPE html>
+ <html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="commonSql">
+
+<!-- mainreadcount -->
+<select id="mainreadcount"  resultType="com.kh.finalPJ.goods.goodsBbsDto">
+	SELECT A.SEQ,A.G_CODE,A.TITLE,A.CONTENT, A.R_DATE,B.G_PRICE ,A.READCOUNT, B.G_IMG
+	FROM R_BBS A 
+	INNER JOIN GOODS B 
+    ON A.G_CODE = B.G_CODE
+    ORDER BY A.READCOUNT DESC
+ </select>
+
+<!-- maindate -->
+<select id="maindate"  resultType="com.kh.finalPJ.goods.goodsBbsDto">
+ SELECT A.SEQ,A.G_CODE,A.TITLE,A.CONTENT, A.R_DATE,B.G_PRICE ,A.READCOUNT, B.G_IMG
+	FROM R_BBS A 
+	INNER JOIN GOODS B 
+    ON A.G_CODE = B.G_CODE
+    ORDER BY A.R_DATE DESC
+ </select>
+
+
+</mapper>

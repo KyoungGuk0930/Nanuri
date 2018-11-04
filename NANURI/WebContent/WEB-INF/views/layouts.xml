@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions
+ PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+   <definition name="main.tiles"
+      template="/WEB-INF/views/layouts-tiles.jsp"> <!-- 기본 형태 -->
+
+      <put-attribute name="header"
+         value="/WEB-INF/views/common/header.jsp" /> <!-- 어디서 불러올 것인지 설정해주는 곳 -->
+
+      <put-attribute name="leftmenu"
+         value="/WEB-INF/views/common/leftmenu.jsp" />
+         
+      <put-attribute name="content"
+         value="/WEB-INF/views/common/main.jsp" />
+
+      <put-attribute name="footer"
+         value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+   
+   <!-- Member====================================================================================== -->
+   <!-- login뷰 -->
+   <definition name="login.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/login.jsp" />
+   </definition>
+
+   <!-- regist뷰 -->
+   <definition name="regist.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/regist.jsp" />
+   </definition>
+   
+   <!-- mypage뷰 -->
+   <definition name="mypage.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/mypages.jsp" />
+   </definition>
+
+   <!-- userUpdate뷰 -->
+   <definition name="userUpdate.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/userUpdate.jsp" />
+   </definition>
+   
+   <!-- secession뷰 -->
+   <definition name="secession.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/secession.jsp" />
+   </definition>
+   
+   <!-- basketList뷰 -->
+   <definition name="basketList.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/basketList.jsp" />
+   </definition>
+
+   <!-- rentalList뷰 -->
+   <definition name="rentalList.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/member/rentalList.jsp" />
+   </definition>
+   
+   <!-- Goods====================================================================================== -->
+   <definition name="rentallist.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/rental/rentallist.jsp" />
+   </definition>
+   
+   <definition name="rentaldetaile.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/rental/rentaldetaile.jsp" />
+   </definition>
+   
+      <definition name="rentallist_select.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/rental/rentallist_select.jsp" />
+   </definition>
+   
+   
+   <definition name="order.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/rental/order.jsp" />      
+   </definition>
+   
+   <!-- Review====================================================================================== -->
+   <!-- list뷰 -->
+   <definition name="reviewlist.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/review/reviewlist.jsp" />
+   </definition>
+
+   <!-- write뷰 -->
+   <definition name="reviewwrite.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/review/reviewwrite.jsp" />
+   </definition>
+
+   <!-- detail뷰 -->
+   <definition name="reviewdetail.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/review/reviewdetail.jsp" />
+   </definition>
+   
+   <!-- reviewupdate뷰 -->
+   <definition name="reviewupdate.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/review/reviewupdate.jsp" />
+   </definition>
+   
+      <!--QA ===================================================== -->
+   <definition name="qalist.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/qa/qalist.jsp" />      
+   </definition>
+   
+   <definition name="qaWrite.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/qa/qaWrite.jsp" />      
+   </definition>
+   
+   <definition name="ansWrite.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/qa/ansWrite.jsp" />      
+   </definition>
+      
+   <definition name="qaAdminWrite.tiles" extends="main.tiles">
+      <put-attribute name="content"
+         value="/WEB-INF/views/qa/qaAdminWrite.jsp" />      
+   </definition>
+   
+   <!-- Admin====================================================================================== -->
+   <!-- 관리자 메인페이지 -->
+   <definition name="adminMain.tiles" template="/WEB-INF/views/layouts-tiles_admin.jsp"> 
+      <put-attribute name="header"
+         value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="menu"
+         value="/WEB-INF/views/admin/adminLeftMenu.jsp" />
+      <put-attribute name="content"
+         value="/WEB-INF/views/admin/adminMain.jsp" />
+      <put-attribute name="footer"
+         value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+   
+   <!-- 회원관리 페이지 -->
+   <definition name="memberList.tiles" extends="adminMain.tiles"> 
+      <put-attribute name="content"
+         value="/WEB-INF/views/admin/memberList.jsp" />
+   </definition>
+   
+   <!-- 탈퇴 승인 페이지 -->
+   <definition name="approve.tiles" extends="adminMain.tiles"> 
+      <put-attribute name="content"
+         value="/WEB-INF/views/admin/approve.jsp" />
+   </definition>
+   
+   <!-- 재고 관리 페이지 -->
+   <definition name="stock.tiles" extends="adminMain.tiles"> 
+      <put-attribute name="content"
+         value="/WEB-INF/views/admin/stock.jsp" />
+   </definition>
+   
+   <!-- 상품 렌탈 등록 페이지 -->
+   <definition name="goodsApply.tiles" extends="adminMain.tiles"> 
+      <put-attribute name="content"
+         value="/WEB-INF/views/admin/goodsApply.jsp" />
+   </definition>
+
+</tiles-definitions>

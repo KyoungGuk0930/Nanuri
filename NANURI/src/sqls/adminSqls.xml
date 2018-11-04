@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminSqls">
+
+<select id="getMemberList" resultType="com.kh.finalPJ.member.memberDto">
+	SELECT * FROM MEMBER
+	WHERE NOT AUTH=2
+</select>
+ 
+<select id="getSecessionList" resultType="com.kh.finalPJ.member.secessionDto">
+	SELECT * FROM SECESSION ORDER BY DEL_SDATE ASC
+</select>
+
+<select id="getGoodsList" resultType="com.kh.finalPJ.goods.goodsDto">
+	SELECT * FROM STOCK FULL OUTER JOIN GOODS USING (G_CODE) 
+</select>
+
+<select id="getGCodes" resultType="string">
+	SELECT GOODS.G_CODE FROM GOODS LEFT JOIN R_BBS ON GOODS.G_CODE=R_BBS.G_CODE WHERE R_BBS.G_CODE IS NULL
+</select>
+
+
+<insert id="goodsRegist" parameterType="com.kh.finalPJ.goods.goodsDto">
+	INSERT INTO GOODS VALUES(#{g_name},#{g_code},#{g_img},#{g_price})
+</insert>
+<insert id="stockRegist" parameterType="string">
+	INSERT INTO STOCK VALUES(#{g_code},0)
+</insert>
+
+<insert id="goodsBbsRegist" parameterType="com.kh.finalPJ.goods.goodsBbsDto">
+	INSERT INTO R_BBS VALUES(SEQ_R_BBS.NEXTVAL,#{g_code},#{title},#{content},SYSDATE,0)
+</insert>
+
+
+<update id="stockUpdate" parameterType="map">
+	UPDATE GOODS SET ${change}='${changeAf}' WHERE G_CODE='${g_code}'
+</update>
+<update id="quantityUpdate" parameterType="map">
+	UPDATE STOCK SET G_QUANTITY='${changeAf}' WHERE G_CODE='${g_code}'
+</update>
+
+<update id="upImgOnly" parameterType="map">
+	UPDATE GOODS SET G_IMG='${filename}' WHERE G_CODE='${g_code}'
+</update>
+
+<insert id="goodsApply" parameterType="map">
+	INSERT INTO R_BBS VALUES(
+		SEQ_R_BBS.NEXTVAL,'${g_code}','${title}','${content}',SYSDATE,0,
+	<foreach collection="sub_imgs" item="sub_img" open="'" close="'" separator=",">
+${sub_img}</foreach>
+	)
+</insert>
+
+<delete id="finalSecession" parameterType="string">
+	DELETE FROM MEMBER WHERE ID=#{id} 
+</delete>
+<update id="secessionUpdate" parameterType="string">
+	UPDATE SECESSION SET STATUS=1 WHERE DEL_ID=#{id} AND STATUS=0
+</update>
+
+<update id="secessionCancle" parameterType="string">
+	UPDATE MEMBER SET AUTH=0 WHERE ID=#{id}
+</update>
+<delete id="restoreMember" parameterType="string">
+	DELETE FROM SECESSION WHERE DEL_ID=#{id} AND STATUS=0 
+</delete>
+
+
+</mapper>

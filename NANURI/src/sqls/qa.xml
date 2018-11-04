@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="KhQa">
+	
+	<!-- 리스트 뿌리기  -->
+	<select id="getQaList" resultType="com.kh.finalPJ.qa.qaDto">
+		SELECT SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET
+		FROM QA
+		WHERE NOT REF=-1
+		ORDER BY REF DESC, SEQ ASC
+	</select>
+	
+	<!-- ref 받아오기 -->
+	<select parameterType="String" resultType="java.lang.Integer" id="getRef">
+		SELECT REF
+		FROM QA
+		WHERE ID=#{id}	
+	</select>
+	
+	<!-- 모든 ref값 가져오기 -->	
+		<select resultType="java.lang.Integer" id="AllgetRef">
+		SELECT REF
+		FROM QA
+		WHERE NOT REF=-1	
+		ORDER BY REF DESC, SEQ ASC
+		</select>
+	
+	<!-- 공지사항 뿌리기 -->
+	<select id="getAdminQaList" resultType="com.kh.finalPJ.qa.qaDto">
+		SELECT SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET
+		FROM QA
+		WHERE REF=-1
+		ORDER BY SEQ DESC
+	</select>		
+	
+	<!-- 유저 질문기입 상품번호가 없을때-->
+	<insert parameterType="com.kh.finalPJ.qa.qaDto" id="QaWriteN">
+		INSERT INTO QA(SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET)
+		VALUES(SEQ_QA.NEXTVAL, #{id}, #{title}, #{content}, SYSDATE, (SELECT NVL(MAX(REF),0)+1 FROM QA), 0, NULL, #{secret})
+	</insert>
+	
+	<!-- 유저 질문기입 상품번호가 있을때 -->
+	<insert parameterType="com.kh.finalPJ.qa.qaDto" id="QaWriteY">
+		INSERT INTO QA(SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET)
+		VALUES(SEQ_QA.NEXTVAL, #{id}, #{title}, #{content}, SYSDATE, (SELECT NVL(MAX(REF),0)+1 FROM QA), 0, #{g_code}, #{secret})
+	</insert>
+	
+	<!-- 관리자 답변 상품번호가 없을때  -->
+	<insert parameterType="com.kh.finalPJ.qa.qaDto" id="ansWriteN"> <!-- ID 로그인뷰랑 합치면 고치기 3인거 고치기 -->
+		INSERT INTO QA(SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET)
+		VALUES(SEQ_QA.NEXTVAL, #{id}, '관리자 답변입니다.', #{content}, SYSDATE, #{ref}, 0, NULL, #{secret})
+	</insert>
+	
+	<!-- 관리자 답변 상품번호가 있을때 -->
+	<insert parameterType="com.kh.finalPJ.qa.qaDto" id="ansWriteY"> <!-- ID 로그인뷰랑 합치면 고치기 3인거 고치기 -->
+		INSERT INTO QA(SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET)
+		VALUES(SEQ_QA.NEXTVAL, #{id}, '관리자 답변입니다.', #{content}, SYSDATE, #{ref}, 0, #{g_code}, #{secret})
+	</insert>
+	
+	<!--공지사항 -->
+	<insert parameterType="com.kh.finalPJ.qa.qaDto" id="qaAdminWrite">
+		INSERT INTO QA(SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET)
+		VALUES(SEQ_QA.NEXTVAL, #{id}, #{title}, #{content}, SYSDATE, -1 , 0, NULL, 0)
+	</insert>
+	
+	<!-- 질문글 삭제  -->
+	<delete parameterType="com.kh.finalPJ.qa.qaDto" id="qaDelete">
+		DELETE FROM QA WHERE REF=#{ref}
+	</delete>
+	
+	<!-- 페이징 처리 -->
+	<select id="getBbsCount"
+		parameterType="com.kh.finalPJ.qa.qaParam"
+		resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*), 0) AS CNT  <!-- 로우의 수구하기  -->
+		FROM QA
+	<!--WHERE 1=1
+		<if test="s_category != '' and s_category != null 
+			  		and s_keyword != '' and s_keyword != null">		  		
+	  		<if test="s_category == 'title'">
+	  			AND TITLE LIKE '%'||#{s_keyword}||'%'  
+	  		</if>		  		
+	  		<if test="s_category == 'contents'">
+	  			AND CONTENT LIKE '%'||#{s_keyword}||'%'
+	  		</if>		  		
+	    </if> -->
+	</select>
+
+	<select id="getBbsPagingList" 
+		parameterType="com.kh.finalPJ.qa.qaParam"
+		resultType="com.kh.finalPJ.qa.qaDto">
+		SELECT SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY REF DESC, SEQ ASC) AS RNUM,
+				SEQ, ID, TITLE, CONTENT, WDATE, REF, DEL, G_CODE, SECRET
+			  FROM QA
+			  WHERE NOT REF=-1
+		<!--  WHERE 1=1		
+			  <if test="s_category != '' and s_category != null 
+			  		and s_keyword != '' and s_keyword != null">
+			  		
+			  		<if test="s_category == 'title'">
+			  			AND TITLE LIKE '%'||#{s_keyword}||'%' 
+			  		</if>		  		
+			  		<if test="s_category == 'contents'">
+			  			AND CONTENT LIKE '%'||#{s_keyword}||'%'
+			  		</if>		  		
+			  </if> -->) A
+		WHERE RNUM BETWEEN ${start} AND ${end}		
+	</select>
+	
+	<delete parameterType="com.kh.finalPJ.qa.qaDto" id="ansDelete">
+		DELETE FROM QA
+		WHERE SEQ=#{seq}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

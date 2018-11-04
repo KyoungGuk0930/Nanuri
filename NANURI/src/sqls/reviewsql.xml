@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review">
+
+<select id="getreview" resultType="com.kh.finalPJ.review.reviewDto">
+	SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, G_CODE, RATING
+	FROM REVIEW
+	ORDER BY WDATE DESC
+</select>
+
+<select id="getrevPagingList" resultType="com.kh.finalPJ.review.reviewDto" parameterType="com.kh.finalPJ.review.reviewParam">	
+	SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, G_CODE, RATING, G_IMG
+	FROM (SELECT ROW_NUMBER() OVER(ORDER BY seq DESC) AS RNUM, SEQ, ID, TITLE, CONTENT, WDATE, DEL, R.G_CODE, RATING, G_IMG
+	FROM REVIEW R, GOODS G
+	WHERE R.G_CODE=G.G_CODE(+)
+	<if test="s_category != '' and s_category != null 
+		  		and s_keyword != '' and s_keyword != null">
+		  		
+		  		<if test="s_category == 'title'">
+		  			AND TITLE LIKE '%'||#{s_keyword}||'%' 
+		  		</if>		  		
+		  		<if test="s_category == 'contents'">
+		  			AND CONTENT LIKE '%'||#{s_keyword}||'%'
+		  		</if>		
+		  		<if test="s_category == 'userid'">
+		  			AND ID LIKE '%'||#{s_keyword}||'%'
+		  		</if>	  		
+	</if>) A
+	WHERE RNUM BETWEEN ${start} AND ${end}
+</select>
+
+<select id="getrevCount" resultType="java.lang.Integer"	parameterType="com.kh.finalPJ.review.reviewParam">
+	
+	SELECT NVL(COUNT(*), 0) AS CNT
+	FROM REVIEW
+	WHERE 1=1
+	<if test="s_category != '' and s_category != null 
+		  		and s_keyword != '' and s_keyword != null">		  		
+  		<if test="s_category == 'title'">
+  			AND TITLE LIKE '%'||#{s_keyword}||'%'  
+  		</if>		  		
+  		<if test="s_category == 'contents'">
+  			AND CONTENT LIKE '%'||#{s_keyword}||'%'
+  		</if>	
+  		<if test="s_category == 'userid'">
+		  	AND ID LIKE '%'||#{s_keyword}||'%'
+		  </if>	  		
+    </if>
+</select>
+
+<insert id="writeReview" parameterType="com.kh.finalPJ.review.reviewDto">
+	INSERT INTO REVIEW
+	VALUES(SEQ_R.NEXTVAL, #{id}, #{title}, #{content}, SYSDATE, 0, #{g_code}, #{rating})
+</insert>
+
+<select id = "detailreview" parameterType="java.lang.Integer" resultType="com.kh.finalPJ.review.reviewDto">
+	SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, R.G_CODE, RATING, G_IMG
+	FROM REVIEW R, GOODS G
+	WHERE R.G_CODE=G.G_CODE(+) AND SEQ=#{seq}
+</select>
+
+<update id="deleterev"  parameterType="java.lang.Integer">
+	DELETE REVIEW
+	WHERE SEQ=#{seq}
+</update>
+
+<update id="reviewupdate" parameterType="com.kh.finalPJ.review.reviewDto">
+	UPDATE REVIEW
+	SET TITLE=#{title}, CONTENT=#{content}, WDATE=SYSDATE, RATING=#{rating}
+	WHERE SEQ=#{seq}
+</update>
+
+<select id="getGoodsSeq" parameterType="String" resultType="java.lang.Integer">
+	SELECT SEQ
+	FROM R_BBS
+	WHERE G_CODE = #{g_code}
+</select>
+
+<select id="goToDto" parameterType="Integer" resultType="com.kh.finalPJ.review.reviewDto">
+	SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, GOODS.G_CODE, RATING, GOODS.G_IMG FROM REVIEW, GOODS WHERE REVIEW.G_CODE = GOODS.G_CODE AND SEQ=#{seq}
+</select>
+</mapper>
