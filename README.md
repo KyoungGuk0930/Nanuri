@@ -48,6 +48,23 @@
 
 ![default](https://user-images.githubusercontent.com/24869943/47962647-1d22bc80-e063-11e8-8c0c-5509783b4f07.jpg)
 
+''' 
+	<!-- 검색 -->
+			<div style="position: relative;">
+			
+			<!-- 검색 input,btn -->
+			<form action="headselect.do" method="post">
+			<input type="text" autocomplete="off" value="" name="title" placeholder="원하시는 상품을 검색해보세요" class="head_select" onkeyup="headtitle_btn()">
+			<input type="submit" class="head_select_btn">
+			</form>
+			
+			<!-- 검색된상품리스트 -->
+			<div class="head_ajaxbox">
+				<ul class="ajaxboxul"></ul>
+			</div>
+			
+			</div>
+'''
 검색바(input)에 
 onkeyup 속성을 주어서 
 검색어 를 입력할때마다
