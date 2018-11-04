@@ -43,7 +43,7 @@
 ![view](https://user-images.githubusercontent.com/24869943/47962959-dbe0db80-e067-11e8-9bc4-a4b3b9e5d98f.png)
 
 
-#### 구현기능소개
+### 구현기능소개
  > Ajax를 통한 검색 기능입니다.
 
 ![default](https://user-images.githubusercontent.com/24869943/47962647-1d22bc80-e063-11e8-8c0c-5509783b4f07.jpg)
