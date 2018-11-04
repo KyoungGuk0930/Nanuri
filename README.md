@@ -33,12 +33,12 @@
 
 
 ### 프로젝트 소개
-> main view
+> 담당 view
 
 ![view](https://user-images.githubusercontent.com/24869943/47962959-dbe0db80-e067-11e8-9bc4-a4b3b9e5d98f.png)
 
 
-## 구현기능소개
+#### 구현기능소개
 
 Ajax를 통한 검색 기능입니다.
 
