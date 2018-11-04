@@ -17,11 +17,11 @@
 
 
 ### 개발환경
-* 언어  
+* **언어**
     JAVA 8 { JSP , MVC2  }  
-* 프레임워크  
+* **프레임워크**  
     Spring { Mybatis , tiles }  
-* DB  
+* **DB**  
    ORACLE 11g  
 * HTML / CSS / JavaScript  
    JQuery / bootstrap  
