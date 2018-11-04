@@ -48,8 +48,8 @@
 
 ![default](https://user-images.githubusercontent.com/24869943/47962647-1d22bc80-e063-11e8-8c0c-5509783b4f07.jpg)
 
-''' 
-	<!-- 검색 -->
+
+	''' <!-- 검색 -->
 <div style="position: relative;">
 			
 <!-- 검색 input,btn -->
@@ -63,8 +63,9 @@
       <ul class="ajaxboxul"></ul>
    </div>
 			
-</div>
-'''
+</div>'''
+
+
 검색바(input)에 
 onkeyup 속성을 주어서 
 검색어 를 입력할때마다
